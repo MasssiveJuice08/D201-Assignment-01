@@ -14,7 +14,8 @@
 
     <StackPanel Grid.Row="0" Orientation="Horizontal">
       <Button x:Name="AddMovieBtn" Content="Add Movie"></Button>
-      <Button x:Name="ImportDataBtn" Content="Import Movies in Bulk"></Button>
+      <Button x:Name="ImportDataBtn" Content="Import Movie List"></Button>
+      <Button x:Name="ExportDataBtn" Content="Export Movie List"></Button>
       <Button x:Name="ManageUsersBtn" Content="Manage Uers"></Button>
       <TextBox x:Name="SearchBox" Width="300"></TextBox>
     </StackPanel>
