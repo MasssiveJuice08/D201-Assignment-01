@@ -139,9 +139,9 @@ namespace D201_Assignment_01
     public void SortByYear()
     {
       List<Movie> movies = ToList();
-      MergeSort.SortByYear(movies);
+      List<Movie> sortedMovies = MergeSort.SortByYear(movies);
       Clear();
-      foreach (Movie movie in movies)
+      foreach (Movie movie in sortedMovies)
       {
         AddLast(movie);
       }

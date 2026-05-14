@@ -5,17 +5,21 @@ namespace D201_Assignment_01
 {
   internal static class MergeSort
   {
-    public static void SortByYear(List<Movie> movies)
+    public static List<Movie> SortByYear(List<Movie> movies)
     {
-      if (movies == null || movies.Count <= 1) return;
+      if (movies == null || movies.Count <= 1)
+      {
+        return new List<Movie>(movies); // return a copy to avoid modifying input
+      }
 
-      List<Movie> sortedMovies = Sort(movies, 0, movies.Count - 1);
-      movies.Clear();
-      movies.AddRange(sortedMovies);
+      List<Movie> moviesCopy = new List<Movie>(movies); // creat copy to avoid modiying input
+      
+      Sort(movies, 0, moviesCopy.Count - 1);
+      return moviesCopy;
     }
 
     // recursion
-    private static List<Movie> Sort(List<Movie> movies, int left, int right)
+    private static void Sort(List<Movie> movies, int left, int right)
     {
       if (left < right)
       {
@@ -26,7 +30,6 @@ namespace D201_Assignment_01
 
         Merge(movies, left, mid, right);
       }
-      return movies;
     }
 
     private static void Merge(List<Movie> movies, int left, int mid, int right)
