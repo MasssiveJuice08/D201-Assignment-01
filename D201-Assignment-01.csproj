@@ -99,6 +99,7 @@
       <SubType>Designer</SubType>
     </Page>
     <Compile Include="BubbleSort.cs" />
+    <Compile Include="MergeSort.cs" />
     <Compile Include="MovieFileManager.cs" />
     <Compile Include="ManageUsersWindow.xaml.cs">
       <DependentUpon>ManageUsersWindow.xaml</DependentUpon>
