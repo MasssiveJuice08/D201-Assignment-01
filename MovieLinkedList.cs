@@ -135,5 +135,16 @@ namespace D201_Assignment_01
         AddLast(movie);
       }
     }
+
+    public void SortByYear()
+    {
+      List<Movie> movies = ToList();
+      List<Movie> sortedMovies = MergeSort.SortByYear(movies);
+      Clear();
+      foreach (Movie movie in sortedMovies)
+      {
+        AddLast(movie);
+      }
+    }
   }
 }

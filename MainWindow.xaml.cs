@@ -106,5 +106,12 @@ namespace D201_Assignment_01
       MovieFileManager.SaveToJsonFile(movieLibrary, jsonFilePath);
       RefreshListView();
     }
+
+    private void SortByYearButton_Click(object sender, RoutedEventArgs e)
+    {
+      movieLibrary.SortByYear();
+      MovieFileManager.SaveToJsonFile(movieLibrary, jsonFilePath);
+      RefreshListView();
+    }
   }
 }
