@@ -25,6 +25,9 @@ namespace D201_Assignment_01
       Available = available;
     }
 
+    // default constructor for deserialisation from JSON
+    public Movie() { } 
+
     public override string ToString()
     {
       return $"{Title} ({ReleaseYear}), Director: {Director}, Genre: {Genre}, ID: {MovieID}, Available: {Available}";
