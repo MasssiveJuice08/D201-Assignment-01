@@ -19,8 +19,8 @@
       <Button x:Name="ManageUsersBtn" Content="Manage Uers"></Button>
       <TextBox x:Name="SearchBox" Width="300"></TextBox>
     </StackPanel>
-    <DataGrid Grid.Row="1">
+    <ListView Grid.Row="1">
       
-    </DataGrid>
+    </ListView>
   </Grid>
 </Window>
