@@ -27,7 +27,7 @@ namespace D201_Assignment_01
 
     public override string ToString()
     {
-      return $"{Title} ({ReleaseYear}), Director: {Director}, Genre: {Genre}, ID: {MovieID}";
+      return $"{Title} ({ReleaseYear}), Director: {Director}, Genre: {Genre}, ID: {MovieID}, Available: {Available}";
     }
   }
 }
