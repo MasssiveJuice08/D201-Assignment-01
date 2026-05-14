@@ -87,16 +87,6 @@ namespace D201_Assignment_01
       return false;
     }
 
-    // search by MovieID
-    public Movie Find(string movieID)
-    {
-      if (movieIDToNode.TryGetValue(movieID, out MovieNode node))
-      {
-        return node.Data;
-      }
-      return null;
-    }
-
     // convert to List<Movie> for binding to ListView
     public List<Movie> ToList()
     {
@@ -163,6 +153,16 @@ namespace D201_Assignment_01
       }
 
       return results;
+    }
+
+    // search by MovieID using hashtable
+    public Movie Find(string movieID)
+    {
+      if (movieIDToNode.TryGetValue(movieID, out MovieNode node))
+      {
+        return node.Data;
+      }
+      return null;
     }
   }
 }
