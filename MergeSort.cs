@@ -12,9 +12,9 @@ namespace D201_Assignment_01
         return new List<Movie>(movies); // return a copy to avoid modifying input
       }
 
-      List<Movie> moviesCopy = new List<Movie>(movies); // creat copy to avoid modiying input
+      List<Movie> moviesCopy = new List<Movie>(movies); // create copy to avoid modiying input
       
-      Sort(movies, 0, moviesCopy.Count - 1);
+      Sort(moviesCopy, 0, moviesCopy.Count - 1);
       return moviesCopy;
     }
 
