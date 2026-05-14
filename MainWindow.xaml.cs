@@ -64,13 +64,40 @@ namespace D201_Assignment_01
       RefreshListView();
     }
 
-    // placeholder test - remove movie
     private void RemoveMovieButton_Click(object sender, RoutedEventArgs e)
     {
       if (listViewMovies.SelectedItem is Movie selectedMovie)
       {
         movieLibrary.Remove(selectedMovie.MovieID);
         MovieFileManager.SaveToJsonFile(movieLibrary, jsonFilePath); // save to JSON
+        RefreshListView();
+      }
+    }
+
+    private void ImportButton_Click(object sender, RoutedEventArgs e)
+    {
+      Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog
+      {
+        Filter = "JSON Files (*.json|*.json"
+      };
+      if (openFileDialog.ShowDialog() == true)
+      {
+        MovieFileManager.LoadFromJsonFile(movieLibrary, openFileDialog.FileName);
+        MovieFileManager.SaveToJsonFile(movieLibrary, jsonFilePath); // save after import
+        RefreshListView();
+      }
+    }
+
+    private void ExportButton_Click(object sender, RoutedEventArgs e)
+    {
+      Microsoft.Win32.SaveFileDialog saveFileDialog = new Microsoft.Win32.SaveFileDialog
+      {
+        Filter = "JSON Files (*.json|*.json",
+        DefaultExt = "json"
+      };
+      if (saveFileDialog.ShowDialog() == true)
+      {
+        MovieFileManager.SaveToJsonFile(movieLibrary, saveFileDialog.FileName);
         RefreshListView();
       }
     }
