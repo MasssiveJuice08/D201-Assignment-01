@@ -123,5 +123,17 @@ namespace D201_Assignment_01
     {
       return head == null;
     }
+
+    // sort by title
+    public void SortByTitle()
+    {
+      List<Movie> movies = ToList();
+      BubbleSort.SortByTitle(movies);
+      Clear();
+      foreach (Movie movie in movies)
+      {
+        AddLast(movie);
+      }
+    }
   }
 }
