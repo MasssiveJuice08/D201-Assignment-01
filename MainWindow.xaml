@@ -13,8 +13,8 @@
     </Grid.RowDefinitions>
 
     <StackPanel Grid.Row="0" Orientation="Horizontal">
-      <Button x:Name="ImportDataBtn" Content="Import Movie List"/>
-      <Button x:Name="ExportDataBtn" Content="Export Movie List"/>
+      <Button Content="Import Movie List" Click="ImportButton_Click"/>
+      <Button Content="Export Movie List" Click="ExportButton_Click"/>
       <Button x:Name="ManageUsersBtn" Content="Manage Uers"/>
       <Button Content="Add Movie" Click="AddMovieButton_Click"/>
       <Button Content="Remove Movie" Click="RemoveMovieButton_Click"/>
