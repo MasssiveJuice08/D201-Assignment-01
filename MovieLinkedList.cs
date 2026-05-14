@@ -10,7 +10,13 @@ namespace D201_Assignment_01
   {
     private MovieNode head;
     private MovieNode tail;
+    private Dictionary<string, MovieNode> movieIDToNode; // hashtable
     public int Count { get; private set; }
+
+    public MovieLinkedList() // constructor for hashtable
+    {
+      movieIDToNode = new Dictionary<string, MovieNode>();
+    }
 
     public void AddLast(Movie movie)
     {
@@ -26,6 +32,7 @@ namespace D201_Assignment_01
         tail = newNode;
       }
       Count++;
+      movieIDToNode[movie.MovieID] = newNode; // add to hashtable
     }
 
     public void AddFirst(Movie movie)
@@ -38,6 +45,7 @@ namespace D201_Assignment_01
         tail = newNode;
       }
       Count++;
+      movieIDToNode[movie.MovieID] = newNode; // add to hashtable
     }
 
     // remove by MovieID
@@ -45,46 +53,46 @@ namespace D201_Assignment_01
     {
       if (head == null) return false;
 
-      if (head.Data.MovieID == movieID)
+      if (!movieIDToNode.ContainsKey(movieID)) return false;
+
+      MovieNode nodeToRemove = movieIDToNode[movieID];
+
+      // if node to remove is head
+      if (nodeToRemove == head)
       {
         head = head.Next;
         if (head == null)
         {
           tail = null;
         }
-        Count--;
-        return true;
+      }
+      else
+      { 
+        // find previous node
+        MovieNode current = head;
+        while (current.Next != nodeToRemove)
+        {
+          current = current.Next;
+        }
+
+        current.Next = nodeToRemove.Next;
+        if (current.Next == null)
+        {
+          tail = current;
+        }
       }
 
-      MovieNode current = head;
-      while (current.Next != null)
-      {
-        if (current.Next.Data.MovieID == movieID)
-        {
-          current.Next = current.Next.Next;
-          if (current.Next == null)
-          {
-            tail = current;
-          }
-          Count--;
-          return true;
-        }
-        current = current.Next;
-      }
+      movieIDToNode.Remove(movieID); // remove from hashtable
+      Count--;
       return false;
     }
 
     // search by MovieID
     public Movie Find(string movieID)
     {
-      MovieNode current = head;
-      while (current != null)
+      if (movieIDToNode.TryGetValue(movieID, out MovieNode node))
       {
-        if (current.Data.MovieID == movieID)
-        {
-          return current.Data;
-        }
-        current = current.Next;
+        return node.Data;
       }
       return null;
     }
@@ -107,6 +115,7 @@ namespace D201_Assignment_01
     {
       head = null;
       tail = null;
+      movieIDToNode.Clear();
       Count = 0;
     }
 
