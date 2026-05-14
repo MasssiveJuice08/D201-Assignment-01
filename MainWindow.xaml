@@ -21,8 +21,8 @@
         <Button x:Name="ManageUsersBtn" Content="Manage Uers" Margin="0,0,5,0" Padding="8,4"/>
         <Button Content="Add Movie" Click="AddMovieButton_Click" Margin="0,0,5,0" Padding="8,4"/>
         <Button Content="Remove Movie" Click="RemoveMovieButton_Click" Margin="0,0,5,0" Padding="8,4"/>
-        <!--<Button Content="Sort by Title" Click="SortByTitleButton_Click" Margin="0,0,5,0" Padding="8,4"/>
-      <Button Content="Sort by Year" Click="SortByYearButton_Click" Margin="0,0,5,0" Padding="8,4"/>-->
+        <Button Content="Sort by Title" Click="SortByTitleButton_Click" Margin="0,0,5,0" Padding="8,4"/>
+        <!--<Button Content="Sort by Year" Click="SortByYearButton_Click" Margin="0,0,5,0" Padding="8,4"/>-->
       </StackPanel>
       <!-- Search -->
       <TextBox x:Name="SearchBox" Width="250" Margin="0,0,0,0" ToolTip="Search"/>
