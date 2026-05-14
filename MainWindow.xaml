@@ -9,26 +9,34 @@
   <Grid Margin="10">
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
       <RowDefinition Height="*"/>
     </Grid.RowDefinitions>
 
     <!-- Toolbar -->
     <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,10">
       <!-- Buttons -->
-      <StackPanel Orientation="Horizontal">
-        <Button Content="Import Movie List" Click="ImportButton_Click" Margin="0,0,5,0" Padding="8,4"/>
-        <Button Content="Export Movie List" Click="ExportButton_Click" Margin="0,0,5,0" Padding="8,4"/>
-        <Button x:Name="ManageUsersBtn" Content="Manage Uers" Margin="0,0,5,0" Padding="8,4"/>
-        <Button Content="Add Movie" Click="AddMovieButton_Click" Margin="0,0,5,0" Padding="8,4"/>
-        <Button Content="Remove Movie" Click="RemoveMovieButton_Click" Margin="0,0,5,0" Padding="8,4"/>
-        <Button Content="Sort by Title" Click="SortByTitleButton_Click" Margin="0,0,5,0" Padding="8,4"/>
-        <Button Content="Sort by Year" Click="SortByYearButton_Click" Margin="0,0,5,0" Padding="8,4"/>
-      </StackPanel>
-      <!-- Search -->
-      <TextBox x:Name="SearchBox" Width="250" Margin="0,0,0,0" ToolTip="Search"/>
+      <Button Content="Import Movie List" Click="ImportButton_Click" Margin="0,0,5,0" Padding="8,4"/>
+      <Button Content="Export Movie List" Click="ExportButton_Click" Margin="0,0,5,0" Padding="8,4"/>
+      <Button x:Name="ManageUsersBtn" Content="Manage Uers" Margin="0,0,5,0" Padding="8,4"/>
+      <Button Content="Add Movie" Click="AddMovieButton_Click" Margin="0,0,5,0" Padding="8,4"/>
+      <Button Content="Remove Movie" Click="RemoveMovieButton_Click" Margin="0,0,5,0" Padding="8,4"/>
+      <Button Content="Sort by Title" Click="SortByTitleButton_Click" Margin="0,0,5,0" Padding="8,4"/>
+      <Button Content="Sort by Year" Click="SortByYearButton_Click" Margin="0,0,5,0" Padding="8,4"/>
     </StackPanel>
     
-    <ListView Grid.Row="1" x:Name="listViewMovies">
+    <!-- Search -->
+    <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,10">
+      <ComboBox x:Name="SearchTypeComboBox" Width="120" Margin="0,0,5,0" VerticalAlignment="Center">
+        <ComboBoxItem Content="Search by Title" IsSelected="True"/>
+        <ComboBoxItem Content="Search by MovieID"/>
+      </ComboBox>
+      <TextBox x:Name="SearchBox" Width="250" Margin="0,0,5,0" VerticalAlignment="Center"/>
+      <Button Content="Search" Click="SearchButton_Click" Padding="8,4" Width="80" VerticalAlignment="Center"/>
+      <Button Content="Clear" Click="ClearSearchButton_Click" Padding="8,4" Width="80" VerticalAlignment="Center" Margin="5,0,0,0"/>
+    </StackPanel>
+    
+    <ListView Grid.Row="2" x:Name="listViewMovies">
       <ListView.View>
         <GridView>
           <GridViewColumn Header="ID" DisplayMemberBinding="{Binding MovieID}" Width="100"/>

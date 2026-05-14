@@ -113,5 +113,37 @@ namespace D201_Assignment_01
       MovieFileManager.SaveToJsonFile(movieLibrary, jsonFilePath);
       RefreshListView();
     }
+
+    private void SearchButton_Click(object sender, RoutedEventArgs e)
+    {
+      string searchTerm = SearchBox.Text.Trim();
+      if (string.IsNullOrEmpty(searchTerm)) return;
+
+      // ComboBox search type
+      string selectedSearchType = (SearchTypeComboBox.SelectedItem as ComboBoxItem)?.Content.ToString();
+
+      List<Movie> searchResults = new List<Movie>();
+
+      if (selectedSearchType == "Search by Title")
+      {
+        searchResults = movieLibrary.SearchByTitle(searchTerm);
+      }
+      else if (selectedSearchType == "Search by MovieID")
+      {
+        Movie foundMovie = movieLibrary.Find(searchTerm);
+        if (foundMovie != null)
+        {
+          searchResults.Add(foundMovie);
+        }
+      }
+      // display results
+      listViewMovies.ItemsSource = searchResults;
+    }
+
+    private void ClearSearchButton_Click(object sender, RoutedEventArgs e)
+    {
+      SearchBox.Text = "";
+      RefreshListView();
+    }
   }
 }
