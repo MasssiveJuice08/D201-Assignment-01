@@ -52,16 +52,14 @@ namespace D201_Assignment_01
     // placeholder test - add movie
     private void AddMovieButton_Click(object sender, RoutedEventArgs e)
     {
-      Movie newMovie = new Movie(
-        "M004", 
-        "The Dark Knight", 
-        "Christopher Nolan", 
-        "Action", 
-        2008, 
-        true);
-      movieLibrary.AddLast(newMovie);
-      MovieFileManager.SaveToJsonFile(movieLibrary, jsonFilePath); // save to JSON
-      RefreshListView();
+      AddMovieWindow addMovieWindow = new AddMovieWindow();
+      // only save if user clicks 'add movie' in AddMovieWindow
+      if (addMovieWindow.ShowDialog() == true)
+      {
+        movieLibrary.AddLast(addMovieWindow.NewMovie);
+        MovieFileManager.SaveToJsonFile(movieLibrary, jsonFilePath); // save to JSON
+        RefreshListView();
+      }  
     }
 
     private void RemoveMovieButton_Click(object sender, RoutedEventArgs e)

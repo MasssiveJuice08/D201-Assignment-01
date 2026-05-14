@@ -5,8 +5,50 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:D201_Assignment_01"
         mc:Ignorable="d"
-        Title="AddMovieWindow" Height="450" Width="800">
+        Title="Add a movie" Height="450" Width="800">
     <Grid>
-        
-    </Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="Auto"/>
+      <ColumnDefinition Width="*"/>
+    </Grid.ColumnDefinitions>
+
+    <!-- MovieID -->
+    <Label Grid.Row="0" Grid.Column="0" Content="Movie ID:"/>
+    <TextBox Grid.Row="0" Grid.Column="1" x:Name="txtMovieID" Margin="5"/>
+
+    <!-- Title -->
+    <Label Grid.Row="1" Grid.Column="0" Content="Title:"/>
+    <TextBox Grid.Row="1" Grid.Column="1" x:Name="txtTitle" Margin="5"/>
+
+    <!-- Director -->
+    <Label Grid.Row="2" Grid.Column="0" Content="Director:"/>
+    <TextBox Grid.Row="2" Grid.Column="1" x:Name="txtDirector" Margin="5"/>
+
+    <!-- Genre -->
+    <Label Grid.Row="3" Grid.Column="0" Content="Genre:"/>
+    <TextBox Grid.Row="3" Grid.Column="1" x:Name="txtGenre" Margin="5"/>
+
+    <!-- Release Year -->
+    <Label Grid.Row="4" Grid.Column="0" Content="Release Year:"/>
+    <TextBox Grid.Row="4" Grid.Column="1" x:Name="txtReleaseYear" Margin="5"/>
+
+    <!-- Available -->
+    <Label Grid.Row="5" Grid.Column="0" Content="Available:"/>
+    <CheckBox Grid.Row="5" Grid.Column="1" x:Name="chkAvailable" Margin="5" VerticalAlignment="Center"/>
+
+    <!-- Buttons -->
+    <StackPanel Grid.Row="6" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
+      <Button Content="Add Movie" Width="80" Margin="5" Click="AddMovieButton_Click"/>
+      <Button Content="Cancel" Width="80" Margin="5" Click="CancelButton_Click"/>
+    </StackPanel>
+  </Grid>
 </Window>
