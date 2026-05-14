@@ -18,7 +18,7 @@ namespace D201_Assignment_01
   /// </summary>
   public partial class AddMovieWindow : Window
   {
-    public Movie NewMovie { get; private set; }
+    internal Movie NewMovie { get; private set; }
     
     public AddMovieWindow()
     {
