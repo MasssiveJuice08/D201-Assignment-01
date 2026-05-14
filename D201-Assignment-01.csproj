@@ -83,6 +83,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Movie.cs" />
+    <Compile Include="MovieLinkedList.cs" />
+    <Compile Include="MovieNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
