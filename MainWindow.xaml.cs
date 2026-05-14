@@ -136,6 +136,8 @@ namespace D201_Assignment_01
           searchResults.Add(foundMovie);
         }
       }
+      // display results
+      listViewMovies.ItemsSource = searchResults;
     }
 
     private void ClearSearchButton_Click(object sender, RoutedEventArgs e)
