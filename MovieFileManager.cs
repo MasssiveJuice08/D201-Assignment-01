@@ -8,7 +8,7 @@ using System.IO;
 
 namespace D201_Assignment_01
 {
-  internal class MovieFileManager
+  internal static class MovieFileManager
   {
     // save movies to JSON
     public static void SaveToJsonFile(MovieLinkedList movieLibrary, string filePath)
