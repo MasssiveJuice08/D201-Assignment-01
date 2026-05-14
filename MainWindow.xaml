@@ -13,14 +13,27 @@
     </Grid.RowDefinitions>
 
     <StackPanel Grid.Row="0" Orientation="Horizontal">
-      <Button x:Name="AddMovieBtn" Content="Add Movie"></Button>
-      <Button x:Name="ImportDataBtn" Content="Import Movie List"></Button>
-      <Button x:Name="ExportDataBtn" Content="Export Movie List"></Button>
-      <Button x:Name="ManageUsersBtn" Content="Manage Uers"></Button>
+      <Button x:Name="ImportDataBtn" Content="Import Movie List"/>
+      <Button x:Name="ExportDataBtn" Content="Export Movie List"/>
+      <Button x:Name="ManageUsersBtn" Content="Manage Uers"/>
+      <Button Content="Add Movie" Click="AddMovieButton_Click"/>
+      <Button Content="Remove Movie" Click="RemoveMovieButton_Click"/>
+      <!--<Button Content="Sort by Title" Click="SortByTitleButton_Click"/>
+      <Button Content="Sort by Year" Click="SortByYearButton_Click"/>-->
       <TextBox x:Name="SearchBox" Width="300"></TextBox>
     </StackPanel>
-    <ListView Grid.Row="1">
-      
+    
+    <ListView Grid.Row="1" x:Name="listViewMovies">
+      <ListView.View>
+        <GridView>
+          <GridViewColumn Header="ID" DisplayMemberBinding="{Binding MovieID}" Width="80"/>
+          <GridViewColumn Header="Title" DisplayMemberBinding="{Binding Title}" Width="150"/>
+          <GridViewColumn Header="Director" DisplayMemberBinding="{Binding Director}" Width="120"/>
+          <GridViewColumn Header="Genre" DisplayMemberBinding="{Binding Genre}" Width="100"/>
+          <GridViewColumn Header="Year" DisplayMemberBinding="{Binding ReleaseYear}" Width="80"/>
+          <GridViewColumn Header="Available" DisplayMemberBinding="{Binding Available}" Width="60"/>
+        </GridView>
+      </ListView.View>
     </ListView>
   </Grid>
 </Window>
