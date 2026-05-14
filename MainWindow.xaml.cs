@@ -60,15 +60,19 @@ namespace D201_Assignment_01
         2008, 
         true);
       movieLibrary.AddLast(newMovie);
-      MovieFileManager.SaveToJsonFile(movieLibrary, jsonFilePath);
+      MovieFileManager.SaveToJsonFile(movieLibrary, jsonFilePath); // save to JSON
       RefreshListView();
     }
 
     // placeholder test - remove movie
     private void RemoveMovieButton_Click(object sender, RoutedEventArgs e)
     {
-      movieLibrary.Remove("M001");
-      RefreshListView();
+      if (listViewMovies.SelectedItem is Movie selectedMovie)
+      {
+        movieLibrary.Remove(selectedMovie.MovieID);
+        MovieFileManager.SaveToJsonFile(movieLibrary, jsonFilePath); // save to JSON
+        RefreshListView();
+      }
     }
   }
 }
