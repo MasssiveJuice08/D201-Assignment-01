@@ -10,6 +10,8 @@ namespace D201_Assignment_01
       if (movies == null || movies.Count <= 1) return;
 
       List<Movie> sortedMovies = Sort(movies, 0, movies.Count - 1);
+      movies.Clear();
+      movies.AddRange(sortedMovies);
     }
 
     // recursion
@@ -39,7 +41,7 @@ namespace D201_Assignment_01
 
       for (int i = 0; i < n1; ++i)
       {
-        leftArray[i] = movies[left + 1];
+        leftArray[i] = movies[left + i];
       }
       for (int j = 0; j < n2; ++j)
       {
