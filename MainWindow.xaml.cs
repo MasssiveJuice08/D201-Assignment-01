@@ -99,5 +99,12 @@ namespace D201_Assignment_01
         RefreshListView();
       }
     }
+
+    private void SortByTitleButton_Click(object sender, RoutedEventArgs e)
+    {
+      movieLibrary.SortByTitle();
+      MovieFileManager.SaveToJsonFile(movieLibrary, jsonFilePath);
+      RefreshListView();
+    }
   }
 }

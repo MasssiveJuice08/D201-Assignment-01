@@ -98,6 +98,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="BubbleSort.cs" />
     <Compile Include="MovieFileManager.cs" />
     <Compile Include="ManageUsersWindow.xaml.cs">
       <DependentUpon>ManageUsersWindow.xaml</DependentUpon>
