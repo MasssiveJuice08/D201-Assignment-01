@@ -15,11 +15,13 @@ using System.Windows.Shapes;
 namespace D201_Assignment_01
 {
   /// <summary>
-  /// Interaction logic for AddMovie.xaml
+  /// Interaction logic for ManageUsersWindow.xaml
   /// </summary>
-  public partial class AddMovie : Window
+  public partial class ManageUsersWindow : Window
   {
-    public AddMovie()
+    private UserLinkedList userLibrary;
+    
+    public ManageUsersWindow()
     {
       InitializeComponent();
     }
