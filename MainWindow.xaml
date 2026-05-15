@@ -21,19 +21,22 @@
       <Button x:Name="ManageUsersBtn" Content="Manage Uers" Margin="0,0,5,0" Padding="8,4"/>
       <Button Content="Add Movie" Click="AddMovieButton_Click" Margin="0,0,5,0" Padding="8,4"/>
       <Button Content="Remove Movie" Click="RemoveMovieButton_Click" Margin="0,0,5,0" Padding="8,4"/>
-      <Button Content="Sort by Title" Click="SortByTitleButton_Click" Margin="0,0,5,0" Padding="8,4"/>
-      <Button Content="Sort by Year" Click="SortByYearButton_Click" Margin="0,0,5,0" Padding="8,4"/>
+      <!-- Add to your toolbar StackPanel -->
+      <Button Content="Borrow Movie" Click="BorrowMovieButton_Click" Margin="0,0,5,0" Padding="8,4"/>
+      <Button Content="Return Movie" Click="ReturnMovieButton_Click" Margin="0,0,5,0" Padding="8,4"/>
     </StackPanel>
     
     <!-- Search -->
     <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,10">
+      <Button Content="Sort by Title" Click="SortByTitleButton_Click" Margin="0,0,5,0" Padding="8,4"/>
+      <Button Content="Sort by Year" Click="SortByYearButton_Click" Margin="0,0,5,0" Padding="8,4"/>
       <ComboBox x:Name="SearchTypeComboBox" Width="120" Margin="0,0,5,0" VerticalAlignment="Center">
         <ComboBoxItem Content="Search by Title" IsSelected="True"/>
         <ComboBoxItem Content="Search by MovieID"/>
       </ComboBox>
       <TextBox x:Name="SearchBox" Width="250" Margin="0,0,5,0" VerticalAlignment="Center"/>
       <Button Content="Search" Click="SearchButton_Click" Padding="8,4" Width="80" VerticalAlignment="Center"/>
-      <Button Content="Clear" Click="ClearSearchButton_Click" Padding="8,4" Width="80" VerticalAlignment="Center" Margin="5,0,0,0"/>
+      <Button Content="Clear" Click="ClearSearchButton_Click" Padding="8,4" Width="80" VerticalAlignment="Center" Margin="5,0,5,0"/>
     </StackPanel>
     
     <ListView Grid.Row="2" x:Name="listViewMovies">
