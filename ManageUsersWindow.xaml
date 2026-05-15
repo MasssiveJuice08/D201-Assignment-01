@@ -5,18 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:D201_Assignment_01"
         mc:Ignorable="d"
-        Title="AddMovie" Height="450" Width="800">
-    <Grid>
-      <Grid.RowDefinitions>
-        <RowDefinition Height="1*"></RowDefinition>
-        <RowDefinition Height="5*"></RowDefinition>
-      </Grid.RowDefinitions>
+        Title="Manage Users" Height="400" Width="500">
+  <Grid Margin="10">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"></RowDefinition>
+      <RowDefinition Height="*"></RowDefinition>
+    </Grid.RowDefinitions>
 
-      <StackPanel Grid.Row="0" Orientation="Horizontal">
-        <Button x:Name="HomeBtn" Content="Home"></Button>
-        <Button x:Name="AddUser" Content="Add User"></Button>
+    <!-- Toolbar -->
+    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
+      <Button Content="Add User" Click="AddUserButton_Click" Margin="0,0,5,0" Padding="8,4"/>
+      <Button Content="Remove User" Click="RemoveUserButton_Click" Margin="0,0,5,0" Padding="8,4"/>
     </StackPanel>
 
-      <DataGrid Grid.Row="1"></DataGrid>
+    <ListView Grid.Row="1" x:Name="listViewUsers">
+      <ListView.View>
+        <GridView>
+          <GridViewColumn Header="First Name" DisplayMemberBinding="{Binding FirstName}" Width="120"/>
+          <GridViewColumn Header="Last Name" DisplayMemberBinding="{Binding LastName}" Width="120"/>
+        </GridView>
+      </ListView.View>
+    </ListView>
   </Grid>
 </Window>
