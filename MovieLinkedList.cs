@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace D201_Assignment_01
 {
@@ -180,6 +181,23 @@ namespace D201_Assignment_01
         // add to waiting list
         movie.WaitingList.Enqueue(user);
         return false; // movie unavailable; add user to queue
+      }
+    }
+
+    public void ReturnMovie(string movieID)
+    {
+      Movie movie = Find(movieID);
+      if (movie == null) return;
+
+      movie.Available = true;
+
+      // if users are in WaitingList, assign movie to next user in queue
+      if (movie.WaitingList.Count > 0)
+      {
+        User nextUser = movie.WaitingList.Dequeue();
+        movie.Available = false; // movie now borrowed by nextUser
+        MessageBox.Show($"Movie '{movie.Title}' assigned to {nextUser.FirstName} {nextUser.LastName}.",
+          "Movie Assigned", MessageBoxButton.OK, MessageBoxImage.Information);
       }
     }
   }
