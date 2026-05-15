@@ -164,5 +164,23 @@ namespace D201_Assignment_01
       }
       return null;
     }
+
+    public bool BorrowMovie(string movieID, User user)
+    {
+      Movie movie = Find(movieID);
+      if (movie == null) return false;
+
+      if (movie.Available)
+      {
+        movie.Available = false; // mark movie as borrowed
+        return true;
+      }
+      else
+      {
+        // add to waiting list
+        movie.WaitingList.Enqueue(user);
+        return false; // movie unavailable; add user to queue
+      }
+    }
   }
 }
