@@ -111,5 +111,22 @@ namespace D201_Assignment_01
       tail = null;
       Count = 0;
     }
+
+    // method to skip duplicate name check for loading user.json on startup
+    public void BulkAdd(User user)
+    {
+      UserNode newNode = new UserNode(user);
+      if (head == null)
+      {
+        head = newNode;
+        tail = newNode;
+      }
+      else
+      {
+        tail.Next = newNode;
+        tail = newNode;
+      }
+      Count++;
+    }
   }
 }
