@@ -30,9 +30,9 @@ namespace D201_Assignment_01
       InitializeComponent();
 
       Directory.CreateDirectory(Path.GetDirectoryName(jsonFilePath)); // check dir exists
-
-      movieLibrary = new MovieLinkedList(); // initialise linked list
-
+      // initialise movie & user data linked lists
+      movieLibrary = new MovieLinkedList();
+      userLibrary = new UserLinkedList();
       MovieFileManager.LoadFromJsonFile(movieLibrary, jsonFilePath); // load from json
       RefreshListView(); // bind to ListView
     }
