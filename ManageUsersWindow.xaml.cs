@@ -21,9 +21,50 @@ namespace D201_Assignment_01
   {
     private UserLinkedList userLibrary;
     
-    internal ManageUsersWindow(UserLinkedList users) // changed method access modifier to internal to prevent CS0051 error
+    internal ManageUsersWindow(UserLinkedList users) // changed constructor access modifier to internal to prevent CS0051 error
     {
       InitializeComponent();
+      userLibrary = users;
+      RefreshUserListView();
+    }
+
+    private void RefreshUserListView()
+    {
+      listViewUsers.ItemsSource = null;
+      listViewUsers.ItemsSource = userLibrary.ToList();
+    }
+
+    private void AddUserButton_Click(object sender, RoutedEventArgs e)
+    {
+      // dialog to input user details
+      AddUserWindow addUserWindow = new AddUserWindow();
+      if (addUserWindow.ShowDialog() == true)
+      {
+        userLibrary.AddLast(addUserWindow.NewUser);
+        RefreshUserListView();
+      }
+    }
+    private void RemoveUserButton_Click(object sender, RoutedEventArgs e)
+    {
+      if (listViewUsers.SelectedItem is User selectedUser)
+      {
+        MessageBoxResult result = MessageBox.Show(
+          $"Are you sure you want to remove {selectedUser.FirstName} {selectedUser.LastName}?",
+          "Confirm Removal",
+          MessageBoxButton.YesNo,
+          MessageBoxImage.Question);
+
+        if (result == MessageBoxResult.Yes)
+        {
+          userLibrary.Remove(selectedUser);
+          RefreshUserListView();
+        }
+      }
+      else
+      {
+        MessageBox.Show("Please select a user to remove.", 
+          "No user selected", MessageBoxButton.OK, MessageBoxImage.Information);
+      }
     }
   }
 }
