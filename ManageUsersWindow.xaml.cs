@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +11,6 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace D201_Assignment_01
 {
@@ -20,11 +20,13 @@ namespace D201_Assignment_01
   public partial class ManageUsersWindow : Window
   {
     private UserLinkedList userLibrary;
-    
-    internal ManageUsersWindow(UserLinkedList users) // changed constructor access modifier to internal to prevent CS0051 error
+    private string userJsonFilePath;
+
+    internal ManageUsersWindow(UserLinkedList users, string userJsonFilePath) // changed constructor access modifier to internal to prevent CS0051 error
     {
       InitializeComponent();
       userLibrary = users;
+      this.userJsonFilePath = userJsonFilePath;
       RefreshUserListView();
     }
 
@@ -41,6 +43,7 @@ namespace D201_Assignment_01
       if (addUserWindow.ShowDialog() == true)
       {
         userLibrary.AddLast(addUserWindow.NewUser);
+        MovieFileManager.SaveUsersToJsonFile(userLibrary, userJsonFilePath);
         RefreshUserListView();
       }
     }
@@ -57,6 +60,7 @@ namespace D201_Assignment_01
         if (result == MessageBoxResult.Yes)
         {
           userLibrary.Remove(selectedUser);
+          MovieFileManager.SaveUsersToJsonFile(userLibrary, userJsonFilePath);
           RefreshUserListView();
         }
       }

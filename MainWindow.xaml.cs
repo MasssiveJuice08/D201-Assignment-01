@@ -23,17 +23,24 @@ namespace D201_Assignment_01
   {
     private MovieLinkedList movieLibrary;
     private UserLinkedList userLibrary;
-    private string jsonFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FilmClub", "movies.json");
+    private string movieJsonFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FilmClub", "movies.json");
+    private string userJsonFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FilmClub", "users.json");
 
     public MainWindow()
     {
       InitializeComponent();
 
-      Directory.CreateDirectory(Path.GetDirectoryName(jsonFilePath)); // check dir exists
+      // check dir exists
+      Directory.CreateDirectory(Path.GetDirectoryName(movieJsonFilePath)); 
+      Directory.CreateDirectory(Path.GetDirectoryName(userJsonFilePath));
+
       // initialise movie & user data linked lists
       movieLibrary = new MovieLinkedList();
       userLibrary = new UserLinkedList();
-      MovieFileManager.LoadFromJsonFile(movieLibrary, jsonFilePath); // load from json
+
+      // load data from json
+      MovieFileManager.LoadMoviesFromJsonFile(movieLibrary, movieJsonFilePath);
+      MovieFileManager.LoadUsersFromJsonFile(userLibrary, userJsonFilePath);
       RefreshListView(); // bind to ListView
     }
 
@@ -50,7 +57,7 @@ namespace D201_Assignment_01
       if (addMovieWindow.ShowDialog() == true)
       {
         movieLibrary.AddLast(addMovieWindow.NewMovie);
-        MovieFileManager.SaveToJsonFile(movieLibrary, jsonFilePath); // save to JSON
+        MovieFileManager.SaveMoviesToJsonFile(movieLibrary, movieJsonFilePath); // save to JSON
         RefreshListView();
       }
     }
@@ -60,7 +67,7 @@ namespace D201_Assignment_01
       if (listViewMovies.SelectedItem is Movie selectedMovie)
       {
         movieLibrary.Remove(selectedMovie.MovieID);
-        MovieFileManager.SaveToJsonFile(movieLibrary, jsonFilePath); // save to JSON
+        MovieFileManager.SaveMoviesToJsonFile(movieLibrary, movieJsonFilePath); // save to JSON
         RefreshListView();
       }
     }
@@ -73,8 +80,8 @@ namespace D201_Assignment_01
       };
       if (openFileDialog.ShowDialog() == true)
       {
-        MovieFileManager.LoadFromJsonFile(movieLibrary, openFileDialog.FileName);
-        MovieFileManager.SaveToJsonFile(movieLibrary, jsonFilePath); // save after import
+        MovieFileManager.LoadMoviesFromJsonFile(movieLibrary, openFileDialog.FileName);
+        MovieFileManager.SaveMoviesToJsonFile(movieLibrary, movieJsonFilePath); // save after import
         RefreshListView();
       }
     }
@@ -88,7 +95,7 @@ namespace D201_Assignment_01
       };
       if (saveFileDialog.ShowDialog() == true)
       {
-        MovieFileManager.SaveToJsonFile(movieLibrary, saveFileDialog.FileName);
+        MovieFileManager.SaveMoviesToJsonFile(movieLibrary, saveFileDialog.FileName);
         RefreshListView();
       }
     }
@@ -96,14 +103,14 @@ namespace D201_Assignment_01
     private void SortByTitleButton_Click(object sender, RoutedEventArgs e)
     {
       movieLibrary.SortByTitle();
-      MovieFileManager.SaveToJsonFile(movieLibrary, jsonFilePath);
+      MovieFileManager.SaveMoviesToJsonFile(movieLibrary, movieJsonFilePath);
       RefreshListView();
     }
 
     private void SortByYearButton_Click(object sender, RoutedEventArgs e)
     {
       movieLibrary.SortByYear();
-      MovieFileManager.SaveToJsonFile(movieLibrary, jsonFilePath);
+      MovieFileManager.SaveMoviesToJsonFile(movieLibrary, movieJsonFilePath);
       RefreshListView();
     }
 
@@ -141,7 +148,7 @@ namespace D201_Assignment_01
 
     private void ManageUsersBtn_Click(object sender, RoutedEventArgs e)
     {
-      ManageUsersWindow manageUsersWindow = new ManageUsersWindow(userLibrary);
+      ManageUsersWindow manageUsersWindow = new ManageUsersWindow(userLibrary, userJsonFilePath);
       manageUsersWindow.ShowDialog();
     }
 
@@ -172,7 +179,7 @@ namespace D201_Assignment_01
                         "Not Available", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
-        MovieFileManager.SaveToJsonFile(movieLibrary, jsonFilePath); // save to JSON
+        MovieFileManager.SaveMoviesToJsonFile(movieLibrary, movieJsonFilePath); // save to JSON
         RefreshListView();
       }
     }
@@ -182,7 +189,7 @@ namespace D201_Assignment_01
       if (listViewMovies.SelectedItem is Movie selectedMovie)
       {
         movieLibrary.ReturnMovie(selectedMovie.MovieID);
-        MovieFileManager.SaveToJsonFile(movieLibrary, jsonFilePath);
+        MovieFileManager.SaveMoviesToJsonFile(movieLibrary, movieJsonFilePath);
         RefreshListView();
       }
     }

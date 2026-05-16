@@ -10,8 +10,9 @@ namespace D201_Assignment_01
 {
   internal static class MovieFileManager
   {
+
     // save movies to JSON
-    public static void SaveToJsonFile(MovieLinkedList movieLibrary, string filePath)
+    public static void SaveMoviesToJsonFile(MovieLinkedList movieLibrary, string filePath)
     {
       List<Movie> movies = movieLibrary.ToList();
       string json = JsonSerializer.Serialize(movies, new JsonSerializerOptions { WriteIndented = true });
@@ -19,7 +20,7 @@ namespace D201_Assignment_01
     }
 
     // load movies from JSON
-    public static void LoadFromJsonFile(MovieLinkedList movieLibrary, string filePath)
+    public static void LoadMoviesFromJsonFile(MovieLinkedList movieLibrary, string filePath)
     {
       if (!File.Exists(filePath)) return;
 
@@ -30,6 +31,29 @@ namespace D201_Assignment_01
       foreach (Movie movie in movies)
       {
         movieLibrary.AddLast(movie);
+      }
+    }
+
+    // save users to JSON
+    public static void SaveUsersToJsonFile(UserLinkedList userLibrary, string filePath)
+    {
+      List<User> users = userLibrary.ToList();
+      string json = JsonSerializer.Serialize(users, new JsonSerializerOptions { WriteIndented = true });
+      File.WriteAllText(filePath, json);
+    }
+
+    // load users from JSON
+    public static void LoadUsersFromJsonFile(UserLinkedList userLibrary, string filePath)
+    {
+      if (!File.Exists(filePath)) return;
+
+      string json = File.ReadAllText(filePath);
+      List<User> users = JsonSerializer.Deserialize<List<User>>(json);
+
+      userLibrary.Clear();
+      foreach (User user in users)
+      {
+        userLibrary.AddLast(user);
       }
     }
   }
