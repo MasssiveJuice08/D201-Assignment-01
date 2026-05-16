@@ -21,7 +21,7 @@ namespace D201_Assignment_01
   {
     private UserLinkedList userLibrary;
     
-    public ManageUsersWindow()
+    internal ManageUsersWindow(UserLinkedList users) // changed method access modifier to internal to prevent CS0051 error
     {
       InitializeComponent();
     }

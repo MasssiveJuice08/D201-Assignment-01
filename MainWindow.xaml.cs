@@ -139,11 +139,9 @@ namespace D201_Assignment_01
       RefreshListView();
     }
 
-    
-
     private void ManageUsersBtn_Click(object sender, RoutedEventArgs e)
     {
-      ManageUsersWindow manageUsersWindow = new ManageUsersWindow();
+      ManageUsersWindow manageUsersWindow = new ManageUsersWindow(userLibrary);
       manageUsersWindow.ShowDialog();
     }
 
@@ -174,8 +172,7 @@ namespace D201_Assignment_01
                         "Not Available", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
-        // Save changes and refresh
-        MovieFileManager.SaveToJsonFile(movieLibrary, jsonFilePath);
+        MovieFileManager.SaveToJsonFile(movieLibrary, jsonFilePath); // save to JSON
         RefreshListView();
       }
     }
