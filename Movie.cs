@@ -24,11 +24,14 @@ namespace D201_Assignment_01
       Genre = genre;
       ReleaseYear = releaseYear;
       Available = available;
-      WaitingList = new Queue<User>(); // initialise queue
+      WaitingList = new Queue<User>(); // initialise queue whether Movie is created in code or deserialized from JSON
     }
 
     // default constructor for deserialisation from JSON
-    public Movie() { } 
+    public Movie()
+    {
+      WaitingList = new Queue<User>(); // initialise queue
+    }
 
     public override string ToString()
     {
