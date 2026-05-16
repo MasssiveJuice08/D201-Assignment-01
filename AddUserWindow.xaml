@@ -5,9 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:D201_Assignment_01"
         mc:Ignorable="d"
-        Title="AddUserWindow" Height="450" Width="800">
+        Title="AddUserWindow" Height="200" Width="400">
   <Grid Margin="10">
     <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
       <RowDefinition Height="Auto"/>
       <RowDefinition Height="Auto"/>
       <RowDefinition Height="Auto"/>
@@ -17,16 +18,20 @@
       <ColumnDefinition Width="*"/>
     </Grid.ColumnDefinitions>
 
+    <!-- UserID -->
+    <Label Grid.Row="0" Grid.Column="0" Content="User ID:"/>
+    <TextBox Grid.Row="0" Grid.Column="1" x:Name="txtUserID" Margin="5"/>
+    
     <!-- First Name -->
-    <Label Grid.Row="0" Grid.Column="0" Content="First Name:"/>
-    <TextBox Grid.Row="0" Grid.Column="1" x:Name="txtFirstName" Margin="5"/>
+    <Label Grid.Row="1" Grid.Column="0" Content="First Name:"/>
+    <TextBox Grid.Row="1" Grid.Column="1" x:Name="txtFirstName" Margin="5"/>
 
     <!-- Last Name -->
-    <Label Grid.Row="1" Grid.Column="0" Content="Last Name:"/>
-    <TextBox Grid.Row="1" Grid.Column="1" x:Name="txtLastName" Margin="5"/>
+    <Label Grid.Row="2" Grid.Column="0" Content="Last Name:"/>
+    <TextBox Grid.Row="2" Grid.Column="1" x:Name="txtLastName" Margin="5"/>
 
     <!-- Buttons -->
-    <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
+    <StackPanel Grid.Row="3" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
       <Button Content="Add User" Click="AddUserButton_Click" Margin="5" Width="80"/>
       <Button Content="Cancel" Click="CancelButton_Click" Margin="5" Width="80"/>
     </StackPanel>

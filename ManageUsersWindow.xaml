@@ -21,6 +21,7 @@
     <ListView Grid.Row="1" x:Name="listViewUsers">
       <ListView.View>
         <GridView>
+          <GridViewColumn Header="User ID" DisplayMemberBinding="{Binding UserID}" Width="80"/>
           <GridViewColumn Header="First Name" DisplayMemberBinding="{Binding FirstName}" Width="120"/>
           <GridViewColumn Header="Last Name" DisplayMemberBinding="{Binding LastName}" Width="120"/>
         </GridView>
