@@ -46,7 +46,7 @@ namespace D201_Assignment_01
         Director = txtDirector.Text,
         Genre = txtGenre.Text,
         ReleaseYear = releaseYear,
-        Available = chkAvailable.IsChecked ?? false
+        Available = true
       };
 
       DialogResult = true;

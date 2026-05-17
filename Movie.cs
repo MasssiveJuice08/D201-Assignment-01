@@ -32,6 +32,7 @@ namespace D201_Assignment_01
     // default constructor for deserialisation from JSON
     public Movie()
     {
+      Available = true; // new movie is available by default unless imported with BorrowedBy & WaitingList values
       WaitingList = new Queue<User>(); // initialise queue
       BorrowedBy = null; 
     }
