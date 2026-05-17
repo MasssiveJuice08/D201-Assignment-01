@@ -43,7 +43,7 @@
 
     <!-- Buttons -->
     <StackPanel Grid.Row="5" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
-      <Button Content="Add Movie" Width="80" Margin="5" Click="AddMovieButton_Click"/>
+      <Button Content="Add Movie" Width="80" Margin="5" Click="AddMovieButton_Click" x:Name="addMovieBtn"/>
       <Button Content="Cancel" Width="80" Margin="5" Click="CancelButton_Click"/>
     </StackPanel>
   </Grid>

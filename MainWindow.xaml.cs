@@ -90,6 +90,24 @@ namespace D201_Assignment_01
       }
     }
 
+    private void ModifyMovieButton_Click(object sender, RoutedEventArgs e)
+    {
+      if (listViewMovies.SelectedItem is Movie selectedMovie)
+      {
+        AddMovieWindow modifyMovieWindow = new AddMovieWindow(selectedMovie);
+        if (modifyMovieWindow.ShowDialog() == true)
+        {
+          MovieFileManager.SaveMoviesToJsonFile(movieLibrary, movieJsonFilePath);
+          RefreshListView();
+        }
+      }
+      else
+      {
+        MessageBox.Show("Please select a movie to modify.", "No Movie Selected",
+          MessageBoxButton.OK, MessageBoxImage.Information);
+      }
+    }
+
     private void ImportButton_Click(object sender, RoutedEventArgs e)
     {
       Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog
