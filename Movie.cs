@@ -15,6 +15,7 @@ namespace D201_Assignment_01
     public int ReleaseYear { get; set; }
     public bool Available { get; set; }
     public Queue<User> WaitingList { get; set; }
+    public User BorrowedBy { get; set; }
 
     public Movie(string movieId, string title, string director, string genre, int releaseYear, bool available)
     {
@@ -25,12 +26,14 @@ namespace D201_Assignment_01
       ReleaseYear = releaseYear;
       Available = available;
       WaitingList = new Queue<User>(); // initialise queue whether Movie is created in code or deserialized from JSON
+      BorrowedBy = null; // initialised as null (not borrowed yet)
     }
 
     // default constructor for deserialisation from JSON
     public Movie()
     {
       WaitingList = new Queue<User>(); // initialise queue
+      BorrowedBy = null; 
     }
 
     public override string ToString()
