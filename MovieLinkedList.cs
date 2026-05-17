@@ -29,6 +29,17 @@ namespace D201_Assignment_01
 
     public void AddLast(Movie movie)
     {
+      if (HasDuplicateMovieID(movie.MovieID))
+      {
+        MessageBox.Show(
+          $"A movie with the ID '{movie.MovieID}' already exists.\n\n" +
+          "Please enter a unique MovieID.",
+          "Duplicate MovieID",
+          MessageBoxButton.OK,
+          MessageBoxImage.Error);
+        return; // Reject the addition
+      }
+      
       MovieNode newNode = new MovieNode(movie);
       if (head == null)
       {
@@ -46,6 +57,17 @@ namespace D201_Assignment_01
 
     public void AddFirst(Movie movie)
     {
+      if (HasDuplicateMovieID(movie.MovieID))
+      {
+        MessageBox.Show(
+          $"A movie with the ID '{movie.MovieID}' already exists.\n\n" +
+          "Please enter a unique MovieID.",
+          "Duplicate MovieID",
+          MessageBoxButton.OK,
+          MessageBoxImage.Error);
+        return; // Reject the addition
+      }
+
       MovieNode newNode = new MovieNode(movie);
       newNode.Next = head;
       head = newNode;
@@ -232,6 +254,20 @@ namespace D201_Assignment_01
         MessageBox.Show($"Movie '{movie.Title}' assigned to {nextUser.FirstName} {nextUser.LastName}.",
           "Movie Assigned", MessageBoxButton.OK, MessageBoxImage.Information);
       }
+    }
+
+    private bool HasDuplicateMovieID(string movieID)
+    {
+      MovieNode current = head;
+      while (current != null)
+      {
+        if (current.Data.MovieID.Equals(movieID, StringComparison.OrdinalIgnoreCase))
+        {
+          return true;
+        }
+        current = current.Next;
+      }
+      return false;
     }
   }
 }
