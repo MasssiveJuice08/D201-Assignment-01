@@ -19,10 +19,32 @@ namespace D201_Assignment_01
   public partial class AddMovieWindow : Window
   {
     internal Movie NewMovie { get; private set; }
+    private bool isModifyMode = false; // add vs modify movie
+    private Movie movieToModify;
     
-    public AddMovieWindow()
+    // constructor for adding new movie
+    internal AddMovieWindow()
     {
       InitializeComponent();
+      isModifyMode = false;
+      this.Title = "Add Movie";
+    }
+
+    //constructor for modifying existing movie
+    internal AddMovieWindow(Movie movie)
+    {
+      InitializeComponent();
+      isModifyMode = true;
+      movieToModify = movie;
+      this.Title = "Modify Movie";
+      this.addMovieBtn.Content = "Save Movie"; // differentiate button when modifying movie
+
+      txtMovieID.Text = movie.MovieID;
+      txtTitle.Text = movie.Title;
+      txtDirector.Text = movie.Director;
+      txtGenre.Text = movie.Genre;
+      txtReleaseYear.Text = movie.ReleaseYear.ToString();
+      txtMovieID.IsEnabled = false; // prevent changing MovieID
     }
 
     private void AddMovieButton_Click(object sender, RoutedEventArgs e)
@@ -38,17 +60,31 @@ namespace D201_Assignment_01
         return;
       }
 
-      // create new movie
-      NewMovie = new Movie
+      if (isModifyMode)
       {
-        MovieID = txtMovieID.Text,
-        Title = txtTitle.Text,
-        Director = txtDirector.Text,
-        Genre = txtGenre.Text,
-        ReleaseYear = releaseYear,
-        Available = true
-      };
+        // update existing movie
+        movieToModify.Title = txtTitle.Text.Trim();
+        movieToModify.Director = txtDirector.Text.Trim();
+        movieToModify.Genre = txtGenre.Text.Trim();
+        movieToModify.ReleaseYear = releaseYear;
 
+        NewMovie = movieToModify;
+      }
+
+      else
+      {
+        // create new movie
+        NewMovie = new Movie
+        {
+          MovieID = txtMovieID.Text.Trim(),
+          Title = txtTitle.Text.Trim(),
+          Director = txtDirector.Text.Trim(),
+          Genre = txtGenre.Text.Trim(),
+          ReleaseYear = releaseYear,
+          Available = true
+        };
+      }
+        
       DialogResult = true;
       Close();
     }
