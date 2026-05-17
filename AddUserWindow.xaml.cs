@@ -28,17 +28,18 @@ namespace D201_Assignment_01
 
     private void AddUserButton_Click(object sender, RoutedEventArgs e)
     {
+      string userID = txtUserID.Text.Trim();
       string firstName = txtFirstName.Text.Trim();
       string lastName = txtLastName.Text.Trim();
 
-      if (string.IsNullOrEmpty(firstName) || string.IsNullOrEmpty(lastName))
+      if (string.IsNullOrEmpty(userID) || string.IsNullOrEmpty(firstName) || string.IsNullOrEmpty(lastName))
       {
-        MessageBox.Show("Please enter both first and last names.", 
+        MessageBox.Show("Please enter all fields.", 
           "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         return;
       }
 
-      NewUser = new User(firstName, lastName);
+      NewUser = new User(userID, firstName, lastName);
       DialogResult = true;
       Close();
     }

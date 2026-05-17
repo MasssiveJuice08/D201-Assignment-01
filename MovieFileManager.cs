@@ -53,7 +53,7 @@ namespace D201_Assignment_01
       userLibrary.Clear();
       foreach (User user in users)
       {
-        userLibrary.AddLast(user);
+        userLibrary.BulkAdd(user);
       }
     }
   }
