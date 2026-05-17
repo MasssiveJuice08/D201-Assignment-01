@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 
 namespace D201_Assignment_01
 {
-  internal class UserLinkedList
+  internal class UserLinkedList : IUserRepository
   {
     private UserNode head;
     private UserNode tail;

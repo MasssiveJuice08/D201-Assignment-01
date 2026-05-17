@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 
 namespace D201_Assignment_01
 {
@@ -15,7 +11,8 @@ namespace D201_Assignment_01
     AlreadyInWaitingList,  // User already in waiting list
     MovieNotFound          // Movie not found
   }
-  internal class MovieLinkedList
+
+  internal class MovieLinkedList : IMovieRepository
   {
     private MovieNode head;
     private MovieNode tail;
@@ -24,7 +21,7 @@ namespace D201_Assignment_01
 
     public MovieLinkedList() // constructor for hashtable
     {
-      movieIDToNode = new Dictionary<string, MovieNode>();
+      movieIDToNode = new Dictionary<string, MovieNode>(StringComparer.OrdinalIgnoreCase);
     }
 
     // returns true if added, false if duplicate MovieID
@@ -186,54 +183,6 @@ namespace D201_Assignment_01
         return node.Data;
       }
       return null;
-    }
-
-    public BorrowResult BorrowMovie(string movieID, User user)
-    {
-      Movie movie = Find(movieID);
-      if (movie == null) return BorrowResult.MovieNotFound;
-
-      // check if user is already borrowing this movie
-      if (movie.BorrowedBy != null && movie.BorrowedBy.UserID == user.UserID)
-      {
-        return BorrowResult.AlreadyBorrowing;
-      }
-
-      if (movie.Available)
-      {
-        movie.Available = false; // mark movie as borrowed
-        movie.BorrowedBy = user; // assign user as borrower
-        return BorrowResult.Success;
-      }
-      else
-      {
-        // check if user already in WaitingList
-        if (movie.WaitingList.Contains(user))
-        {
-          return BorrowResult.AlreadyInWaitingList;
-        }
-        
-        // add to waiting list
-        movie.WaitingList.Enqueue(user);
-        return BorrowResult.AddedToWaitingList;
-      }
-    }
-
-    public void ReturnMovie(string movieID)
-    {
-      Movie movie = Find(movieID);
-      if (movie == null) return;
-
-      movie.Available = true;
-      movie.BorrowedBy = null; // unassign borrower
-
-      // if users are in WaitingList, assign movie to next user in queue
-      if (movie.WaitingList.Count > 0)
-      {
-        User nextUser = movie.WaitingList.Dequeue();
-        movie.Available = false; // mark as borrowed
-        movie.BorrowedBy = nextUser; // movie now borrowed by nextUser
-      }
     }
 
     // check if a single movie has a duplicate movieID
