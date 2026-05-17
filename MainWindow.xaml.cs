@@ -168,18 +168,36 @@ namespace D201_Assignment_01
         if (selectUserWindow.ShowDialog() == true)
         {
           User selectedUser = selectUserWindow.SelectedUser;
-          bool success = movieLibrary.BorrowMovie(selectedMovie.MovieID, selectedUser);
+          BorrowResult result = movieLibrary.BorrowMovie(selectedMovie.MovieID, selectedUser);
 
-          if (success)
+          switch (result)
           {
-            MessageBox.Show($"Movie '{selectedMovie.Title}' borrowed by {selectedUser.FirstName} {selectedUser.LastName}.",
-              "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-          }
-          else
-          {
-            MessageBox.Show($"Movie '{selectedMovie.Title}' is not available. " +
-              $"{selectedUser.FirstName} {selectedUser.LastName} added to the waiting list.",
-              "Not Available", MessageBoxButton.OK, MessageBoxImage.Information);
+            case BorrowResult.Success:
+              MessageBox.Show(
+                $"Movie '{selectedMovie.Title}' borrowed by {selectedUser.FirstName} {selectedUser.LastName}.",
+                "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+              break;
+
+            case BorrowResult.AlreadyBorrowing:
+              // No additional message needed (already shown in BorrowMovie)
+              break;
+
+            case BorrowResult.AddedToWaitingList:
+              MessageBox.Show(
+                $"Movie '{selectedMovie.Title}' is not available. " +
+                $"{selectedUser.FirstName} {selectedUser.LastName} added to the waiting list.",
+                "Not Available", MessageBoxButton.OK, MessageBoxImage.Information);
+              break;
+
+            case BorrowResult.AlreadyInWaitingList:
+              // No additional message needed (already shown in BorrowMovie)
+              break;
+
+            case BorrowResult.MovieNotFound:
+              MessageBox.Show(
+                $"Movie not found.",
+                "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+              break;
           }
 
           MovieFileManager.SaveMoviesToJsonFile(movieLibrary, movieJsonFilePath); // save to JSON
