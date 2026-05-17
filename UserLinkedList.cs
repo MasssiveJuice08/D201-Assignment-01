@@ -15,7 +15,19 @@ namespace D201_Assignment_01
 
     public void AddLast(User user)
     {
-      // check for duplicate names
+      // check for duplicate userID
+      if (HasDuplicateUserID(user.UserID))
+      {
+        MessageBox.Show(
+          $"A user with the ID '{user.UserID}' already exists.\n\n" +
+          "Please enter a unique UserID.",
+          "Duplicate UserID",
+          MessageBoxButton.OK,
+          MessageBoxImage.Error);
+        return; // Reject the addition
+      }
+      
+      // if new userID unique, check for duplicate names
       if (HasDuplicateName(user.FirstName, user.LastName))
       {
         MessageBoxResult result = MessageBox.Show(
@@ -43,6 +55,20 @@ namespace D201_Assignment_01
         tail = newNode;
       }
       Count++;
+    }
+
+    public bool HasDuplicateUserID(string userID)
+    {
+      UserNode current = head;
+      while (current != null)
+      {
+        if (current.Data.UserID.Equals(userID, StringComparison.OrdinalIgnoreCase))
+        {
+          return true;
+        }
+        current = current.Next;
+      }
+      return false;
     }
 
     public bool HasDuplicateName(string firstName, string lastName)
