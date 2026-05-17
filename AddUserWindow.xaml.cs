@@ -20,10 +20,30 @@ namespace D201_Assignment_01
   public partial class AddUserWindow : Window
   {
     internal User NewUser { get; private set; }
+    private bool isModifyMode = false;
+    private User userToModify;
 
-    public AddUserWindow()
+    // constructor for adding new user
+    internal AddUserWindow()
     {
       InitializeComponent();
+      isModifyMode = false;
+      this.Title = "Add User";
+    }
+
+    // constructor for modifying existing user
+    internal AddUserWindow(User user)
+    {
+      InitializeComponent();
+      isModifyMode = true;
+      userToModify = user;
+      this.Title = "Modify User";
+      this.addUserBtn.Content = "Save User";
+
+      txtUserID.Text = user.UserID;
+      txtFirstName.Text = user.FirstName;
+      txtLastName.Text = user.LastName;
+      txtUserID.IsEnabled = false; // prevent changing userID
     }
 
     private void AddUserButton_Click(object sender, RoutedEventArgs e)
@@ -39,7 +59,19 @@ namespace D201_Assignment_01
         return;
       }
 
-      NewUser = new User(userID, firstName, lastName);
+      if (isModifyMode)
+      {
+        // update existing user
+        userToModify.FirstName = firstName;
+        userToModify.LastName = lastName;
+        NewUser = userToModify;
+      }
+      else
+      {
+        // create new user
+        NewUser = new User(userID, firstName, lastName);
+      }
+
       DialogResult = true;
       Close();
     }

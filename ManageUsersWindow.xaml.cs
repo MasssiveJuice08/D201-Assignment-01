@@ -70,5 +70,23 @@ namespace D201_Assignment_01
           "No user selected", MessageBoxButton.OK, MessageBoxImage.Information);
       }
     }
+
+    private void ModifyUserButton_Click(object sender, RoutedEventArgs e)
+    {
+      if (listViewUsers.SelectedItem is User selectedUser)
+      {
+        AddUserWindow modifyUserWindow = new AddUserWindow(selectedUser);
+        if (modifyUserWindow.ShowDialog() == true)
+        {
+          MovieFileManager.SaveUsersToJsonFile(userLibrary, userJsonFilePath);
+          RefreshUserListView();
+        }
+      }
+      else
+      {
+        MessageBox.Show("Please select a user to modify.", "No User Selected",
+          MessageBoxButton.OK, MessageBoxImage.Information);
+      }
+    }
   }
 }
