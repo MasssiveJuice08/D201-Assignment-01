@@ -156,31 +156,53 @@ namespace D201_Assignment_01
     {
       if (listViewMovies.SelectedItem is Movie selectedMovie)
       {
-        // Open a dialog to select a user (or use the first user for simplicity)
+        // Open a dialog to select a user
         if (userLibrary.Count == 0)
         {
           MessageBox.Show("No users available. Add users first.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
           return;
         }
 
-        // For simplicity, borrow the movie for the first user in the list
-        User firstUser = userLibrary.ToList()[0];
-        bool success = movieLibrary.BorrowMovie(selectedMovie.MovieID, firstUser);
-
-        if (success)
+        // open user selection window
+        SelectUserWindow selectUserWindow = new SelectUserWindow(userLibrary);
+        if (selectUserWindow.ShowDialog() == true)
         {
-          MessageBox.Show($"Movie '{selectedMovie.Title}' borrowed by {firstUser.FirstName} {firstUser.LastName}.",
-                        "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-        }
-        else
-        {
-          MessageBox.Show($"Movie '{selectedMovie.Title}' is not available. " +
-                         $"{firstUser.FirstName} {firstUser.LastName} added to the waiting list.",
-                        "Not Available", MessageBoxButton.OK, MessageBoxImage.Information);
-        }
+          User selectedUser = selectUserWindow.SelectedUser;
+          BorrowResult result = movieLibrary.BorrowMovie(selectedMovie.MovieID, selectedUser);
 
-        MovieFileManager.SaveMoviesToJsonFile(movieLibrary, movieJsonFilePath); // save to JSON
-        RefreshListView();
+          switch (result)
+          {
+            case BorrowResult.Success:
+              MessageBox.Show(
+                $"Movie '{selectedMovie.Title}' borrowed by {selectedUser.FirstName} {selectedUser.LastName}.",
+                "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+              break;
+
+            case BorrowResult.AlreadyBorrowing:
+              // No additional message needed (already shown in BorrowMovie)
+              break;
+
+            case BorrowResult.AddedToWaitingList:
+              MessageBox.Show(
+                $"Movie '{selectedMovie.Title}' is not available. " +
+                $"{selectedUser.FirstName} {selectedUser.LastName} added to the waiting list.",
+                "Not Available", MessageBoxButton.OK, MessageBoxImage.Information);
+              break;
+
+            case BorrowResult.AlreadyInWaitingList:
+              // No additional message needed (already shown in BorrowMovie)
+              break;
+
+            case BorrowResult.MovieNotFound:
+              MessageBox.Show(
+                $"Movie not found.",
+                "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+              break;
+          }
+
+          MovieFileManager.SaveMoviesToJsonFile(movieLibrary, movieJsonFilePath); // save to JSON
+          RefreshListView();
+        }
       }
     }
 

@@ -7,6 +7,14 @@ using System.Windows;
 
 namespace D201_Assignment_01
 {
+  public enum BorrowResult
+  {
+    Success,               // Movie borrowed successfully
+    AlreadyBorrowing,      // User already borrowing this movie
+    AddedToWaitingList,    // Movie unavailable, add user to waiting list
+    AlreadyInWaitingList,  // User already in waiting list
+    MovieNotFound          // Movie not found
+  }
   internal class MovieLinkedList
   {
     private MovieNode head;
@@ -166,22 +174,44 @@ namespace D201_Assignment_01
       return null;
     }
 
-    public bool BorrowMovie(string movieID, User user)
+    public BorrowResult BorrowMovie(string movieID, User user)
     {
       Movie movie = Find(movieID);
-      if (movie == null) return false;
+      if (movie == null) return BorrowResult.MovieNotFound;
+
+      // check if user is already borrowing this movie
+      if (movie.BorrowedBy != null && movie.BorrowedBy.UserID == user.UserID)
+      {
+        MessageBox.Show(
+          $"{user.FirstName} {user.LastName} is already borrowing '{movie.Title}'.",
+          "Already Borrowing",
+          MessageBoxButton.OK,
+          MessageBoxImage.Information);
+        return BorrowResult.AlreadyBorrowing;
+      }
 
       if (movie.Available)
       {
         movie.Available = false; // mark movie as borrowed
         movie.BorrowedBy = user; // assign user as borrower
-        return true;
+        return BorrowResult.Success;
       }
       else
       {
+        // check if user already in WaitingList
+        if (movie.WaitingList.Contains(user))
+        {
+          MessageBox.Show(
+            $"{user.FirstName} {user.LastName} is already in the waiting list for '{movie.Title}'.",
+            "Already in Waiting List",
+            MessageBoxButton.OK,
+            MessageBoxImage.Information);
+          return BorrowResult.AlreadyInWaitingList;
+        }
+        
         // add to waiting list
         movie.WaitingList.Enqueue(user);
-        return false; // movie unavailable; add user to queue
+        return BorrowResult.AddedToWaitingList;
       }
     }
 
