@@ -1,4 +1,3 @@
-IMovieService.cs
 namespace D201_Assignment_01
 {
   internal interface IMovieService
