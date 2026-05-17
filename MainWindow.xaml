@@ -48,6 +48,17 @@
           <GridViewColumn Header="Genre" DisplayMemberBinding="{Binding Genre}" Width="100"/>
           <GridViewColumn Header="Year" DisplayMemberBinding="{Binding ReleaseYear}" Width="80"/>
           <GridViewColumn Header="Available" DisplayMemberBinding="{Binding Available}" Width="60"/>
+          <GridViewColumn Header="Borrowed By" Width="120">
+            <GridViewColumn.CellTemplate>
+              <DataTemplate>
+                <StackPanel Orientation="Horizontal">
+                  <TextBlock Text="{Binding BorrowedBy.FirstName}" />
+                  <TextBlock Text=" " />
+                  <TextBlock Text="{Binding BorrowedBy.LastName}" />
+                </StackPanel>
+              </DataTemplate>
+            </GridViewColumn.CellTemplate>
+          </GridViewColumn>
         </GridView>
       </ListView.View>
     </ListView>

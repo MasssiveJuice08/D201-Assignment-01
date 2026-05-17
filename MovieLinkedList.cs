@@ -174,6 +174,7 @@ namespace D201_Assignment_01
       if (movie.Available)
       {
         movie.Available = false; // mark movie as borrowed
+        movie.BorrowedBy = user; // assign user as borrower
         return true;
       }
       else
@@ -190,12 +191,14 @@ namespace D201_Assignment_01
       if (movie == null) return;
 
       movie.Available = true;
+      movie.BorrowedBy = null; // unassign borrower
 
       // if users are in WaitingList, assign movie to next user in queue
       if (movie.WaitingList.Count > 0)
       {
         User nextUser = movie.WaitingList.Dequeue();
-        movie.Available = false; // movie now borrowed by nextUser
+        movie.Available = false; // mark as borrowed
+        movie.BorrowedBy = nextUser; // movie now borrowed by nextUser
         MessageBox.Show($"Movie '{movie.Title}' assigned to {nextUser.FirstName} {nextUser.LastName}.",
           "Movie Assigned", MessageBoxButton.OK, MessageBoxImage.Information);
       }
