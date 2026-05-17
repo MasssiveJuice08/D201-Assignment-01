@@ -20,18 +20,24 @@ namespace D201_Assignment_01
     }
 
     // load movies from JSON
-    public static void LoadMoviesFromJsonFile(MovieLinkedList movieLibrary, string filePath)
+    public static bool LoadMoviesFromJsonFile(MovieLinkedList movieLibrary, string filePath, bool checkForDuplicates = true)
     {
-      if (!File.Exists(filePath)) return;
+      if (!File.Exists(filePath)) return false;
 
       string json = File.ReadAllText(filePath);
       List<Movie> movies = JsonSerializer.Deserialize<List<Movie>>(json);
 
+      if (checkForDuplicates && movieLibrary.HasDuplicateMovieID(movies))
+      {
+        return false; // duplicates found
+      }
+
       movieLibrary.Clear(); // clear existing data
       foreach (Movie movie in movies)
       {
-        movieLibrary.AddLast(movie);
+        movieLibrary.BulkAdd(movie); // skips duplicate checks
       }
+      return true;
     }
 
     // save users to JSON
