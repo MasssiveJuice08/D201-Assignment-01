@@ -171,6 +171,17 @@ namespace D201_Assignment_01
       Movie movie = Find(movieID);
       if (movie == null) return false;
 
+      // check if user is already borrowing this movie
+      if (movie.BorrowedBy != null && movie.BorrowedBy.UserID == user.UserID)
+      {
+        MessageBox.Show(
+          $"{user.FirstName} {user.LastName} is already borrowing '{movie.Title}'.",
+          "Already Borrowing",
+          MessageBoxButton.OK,
+          MessageBoxImage.Information);
+        return false; // prevent adding BorrowedBy user to WaitingList
+      }
+
       if (movie.Available)
       {
         movie.Available = false; // mark movie as borrowed
@@ -179,6 +190,15 @@ namespace D201_Assignment_01
       }
       else
       {
+        if (movie.WaitingList.Contains(user))
+        {
+          MessageBox.Show($"{user.FirstName} {user.LastName} is already in the waiting list for '{movie.Title}'.",
+            "Already in Waiting List",
+            MessageBoxButton.OK,
+            MessageBoxImage.Information);
+          return false; // Prevent duplicate entries in WaitingList
+        }
+        
         // add to waiting list
         movie.WaitingList.Enqueue(user);
         return false; // movie unavailable; add user to queue
