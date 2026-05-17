@@ -42,6 +42,33 @@ namespace D201_Assignment_01
       AddUserWindow addUserWindow = new AddUserWindow();
       if (addUserWindow.ShowDialog() == true)
       {
+        // UI handles duplicate checks & confirmation
+        if (userLibrary.HasDuplicateUserID(addUserWindow.NewUser.UserID))
+        {
+          MessageBox.Show(
+            $"A user with the ID '{addUserWindow.NewUser.UserID}' already exists.\n\n" +
+            "Please enter a unique UserID.",
+            "Duplicate UserID",
+            MessageBoxButton.OK,
+            MessageBoxImage.Error);
+          return;
+        }
+
+        if (userLibrary.HasDuplicateName(addUserWindow.NewUser.FirstName, addUserWindow.NewUser.LastName))
+        {
+          MessageBoxResult result = MessageBox.Show(
+            $"A user with the name {addUserWindow.NewUser.FirstName} {addUserWindow.NewUser.LastName} already exists.\n\n" +
+            $"Would you like to add this user anyway?",
+            "Duplicate Name",
+            MessageBoxButton.YesNo,
+            MessageBoxImage.Question);
+
+          if (result == MessageBoxResult.No)
+          {
+            return; // user not added
+          }
+        }
+
         userLibrary.AddLast(addUserWindow.NewUser);
         MovieFileManager.SaveUsersToJsonFile(userLibrary, userJsonFilePath);
         RefreshUserListView();

@@ -23,6 +23,7 @@ namespace D201_Assignment_01
   {
     private MovieLinkedList movieLibrary;
     private UserLinkedList userLibrary;
+    private IMovieService movieService;
     private string movieJsonFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FilmClub", "movies.json");
     private string userJsonFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FilmClub", "users.json");
 
@@ -37,6 +38,8 @@ namespace D201_Assignment_01
       // initialise movie & user data linked lists
       movieLibrary = new MovieLinkedList();
       userLibrary = new UserLinkedList();
+      // movieService delegates borrow/return to MovieService to execute
+      movieService = new MovieService(movieLibrary);
 
       // load data from json
       MovieFileManager.LoadMoviesFromJsonFile(movieLibrary, movieJsonFilePath);
@@ -56,6 +59,18 @@ namespace D201_Assignment_01
       // only save if user clicks 'add movie' in AddMovieWindow
       if (addMovieWindow.ShowDialog() == true)
       {
+        // Validate duplicate ID in UI layer
+        if (movieLibrary.HasDuplicateMovieID(addMovieWindow.NewMovie.MovieID))
+        {
+          MessageBox.Show(
+            $"A movie with the ID '{addMovieWindow.NewMovie.MovieID}' already exists.\n\n" +
+            "Please enter a unique MovieID.",
+            "Duplicate MovieID",
+            MessageBoxButton.OK,
+            MessageBoxImage.Error);
+          return;
+        }
+
         movieLibrary.AddLast(addMovieWindow.NewMovie);
         MovieFileManager.SaveMoviesToJsonFile(movieLibrary, movieJsonFilePath); // save to JSON
         RefreshListView();
@@ -217,7 +232,7 @@ namespace D201_Assignment_01
         if (selectUserWindow.ShowDialog() == true)
         {
           User selectedUser = selectUserWindow.SelectedUser;
-          BorrowResult result = movieLibrary.BorrowMovie(selectedMovie.MovieID, selectedUser);
+          BorrowResult result = movieService.BorrowMovie(selectedMovie.MovieID, selectedUser);
 
           switch (result)
           {
@@ -228,7 +243,11 @@ namespace D201_Assignment_01
               break;
 
             case BorrowResult.AlreadyBorrowing:
-              // No additional message needed (already shown in BorrowMovie)
+              MessageBox.Show(
+                $"{selectedUser.FirstName} {selectedUser.LastName} is already borrowing '{selectedMovie.Title}'.",
+                "Already Borrowing",
+                MessageBoxButton.OK,
+                MessageBoxImage.Information);
               break;
 
             case BorrowResult.AddedToWaitingList:
@@ -239,7 +258,11 @@ namespace D201_Assignment_01
               break;
 
             case BorrowResult.AlreadyInWaitingList:
-              // No additional message needed (already shown in BorrowMovie)
+              MessageBox.Show(
+                $"{selectedUser.FirstName} {selectedUser.LastName} is already in the waiting list for '{selectedMovie.Title}'.",
+                "Already in Waiting List",
+                MessageBoxButton.OK,
+                MessageBoxImage.Information);
               break;
 
             case BorrowResult.MovieNotFound:
@@ -249,7 +272,7 @@ namespace D201_Assignment_01
               break;
           }
 
-          MovieFileManager.SaveMoviesToJsonFile(movieLibrary, movieJsonFilePath); // save to JSON
+          MovieFileManager.SaveMoviesToJsonFile(movieLibrary, movieJsonFilePath);
           RefreshListView();
         }
       }
@@ -259,7 +282,7 @@ namespace D201_Assignment_01
     {
       if (listViewMovies.SelectedItem is Movie selectedMovie)
       {
-        movieLibrary.ReturnMovie(selectedMovie.MovieID);
+        movieService.ReturnMovie(selectedMovie.MovieID);
         MovieFileManager.SaveMoviesToJsonFile(movieLibrary, movieJsonFilePath);
         RefreshListView();
       }

@@ -89,6 +89,10 @@
     <Compile Include="AddUserWindow.xaml.cs">
       <DependentUpon>AddUserWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="IMovieRepository.cs" />
+    <Compile Include="IMovieService.cs" />
+    <Compile Include="IUserRepository.cs" />
+    <Compile Include="MovieService.cs" />
     <Compile Include="SelectUserWindow.xaml.cs">
       <DependentUpon>SelectUserWindow.xaml</DependentUpon>
     </Compile>
