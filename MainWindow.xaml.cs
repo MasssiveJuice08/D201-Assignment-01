@@ -23,6 +23,7 @@ namespace D201_Assignment_01
   {
     private MovieLinkedList movieLibrary;
     private UserLinkedList userLibrary;
+    private IMovieService movieService;
     private string movieJsonFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FilmClub", "movies.json");
     private string userJsonFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FilmClub", "users.json");
 
@@ -37,6 +38,8 @@ namespace D201_Assignment_01
       // initialise movie & user data linked lists
       movieLibrary = new MovieLinkedList();
       userLibrary = new UserLinkedList();
+      // movieService delegates borrow/return to MovieService to execute
+      movieService = new MovieService(movieLibrary);
 
       // load data from json
       MovieFileManager.LoadMoviesFromJsonFile(movieLibrary, movieJsonFilePath);
@@ -229,7 +232,7 @@ namespace D201_Assignment_01
         if (selectUserWindow.ShowDialog() == true)
         {
           User selectedUser = selectUserWindow.SelectedUser;
-          BorrowResult result = movieLibrary.BorrowMovie(selectedMovie.MovieID, selectedUser);
+          BorrowResult result = movieService.BorrowMovie(selectedMovie.MovieID, selectedUser);
 
           switch (result)
           {
@@ -269,7 +272,7 @@ namespace D201_Assignment_01
               break;
           }
 
-          MovieFileManager.SaveMoviesToJsonFile(movieLibrary, movieJsonFilePath); // save to JSON
+          MovieFileManager.SaveMoviesToJsonFile(movieLibrary, movieJsonFilePath);
           RefreshListView();
         }
       }
@@ -279,7 +282,7 @@ namespace D201_Assignment_01
     {
       if (listViewMovies.SelectedItem is Movie selectedMovie)
       {
-        movieLibrary.ReturnMovie(selectedMovie.MovieID);
+        movieService.ReturnMovie(selectedMovie.MovieID);
         MovieFileManager.SaveMoviesToJsonFile(movieLibrary, movieJsonFilePath);
         RefreshListView();
       }
