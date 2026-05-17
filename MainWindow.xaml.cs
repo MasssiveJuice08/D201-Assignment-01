@@ -56,6 +56,18 @@ namespace D201_Assignment_01
       // only save if user clicks 'add movie' in AddMovieWindow
       if (addMovieWindow.ShowDialog() == true)
       {
+        // Validate duplicate ID in UI layer
+        if (movieLibrary.HasDuplicateMovieID(addMovieWindow.NewMovie.MovieID))
+        {
+          MessageBox.Show(
+            $"A movie with the ID '{addMovieWindow.NewMovie.MovieID}' already exists.\n\n" +
+            "Please enter a unique MovieID.",
+            "Duplicate MovieID",
+            MessageBoxButton.OK,
+            MessageBoxImage.Error);
+          return;
+        }
+
         movieLibrary.AddLast(addMovieWindow.NewMovie);
         MovieFileManager.SaveMoviesToJsonFile(movieLibrary, movieJsonFilePath); // save to JSON
         RefreshListView();
@@ -228,7 +240,11 @@ namespace D201_Assignment_01
               break;
 
             case BorrowResult.AlreadyBorrowing:
-              // No additional message needed (already shown in BorrowMovie)
+              MessageBox.Show(
+                $"{selectedUser.FirstName} {selectedUser.LastName} is already borrowing '{selectedMovie.Title}'.",
+                "Already Borrowing",
+                MessageBoxButton.OK,
+                MessageBoxImage.Information);
               break;
 
             case BorrowResult.AddedToWaitingList:
@@ -239,7 +255,11 @@ namespace D201_Assignment_01
               break;
 
             case BorrowResult.AlreadyInWaitingList:
-              // No additional message needed (already shown in BorrowMovie)
+              MessageBox.Show(
+                $"{selectedUser.FirstName} {selectedUser.LastName} is already in the waiting list for '{selectedMovie.Title}'.",
+                "Already in Waiting List",
+                MessageBoxButton.OK,
+                MessageBoxImage.Information);
               break;
 
             case BorrowResult.MovieNotFound:

@@ -13,34 +13,14 @@ namespace D201_Assignment_01
     private UserNode tail;
     public int Count { get; private set; }
 
-    public void AddLast(User user)
+    // returns true if user added; false if duplicate UserID
+    public bool AddLast(User user)
     {
       // check for duplicate userID
       if (HasDuplicateUserID(user.UserID))
       {
-        MessageBox.Show(
-          $"A user with the ID '{user.UserID}' already exists.\n\n" +
-          "Please enter a unique UserID.",
-          "Duplicate UserID",
-          MessageBoxButton.OK,
-          MessageBoxImage.Error);
-        return; // Reject the addition
-      }
-      
-      // if new userID unique, check for duplicate names
-      if (HasDuplicateName(user.FirstName, user.LastName))
-      {
-        MessageBoxResult result = MessageBox.Show(
-          $"A user with the name {user.FirstName} {user.LastName} already exists.\n\n" +
-          $"Would you like to add this user anyway?",
-          "Duplicate Name",
-          MessageBoxButton.YesNo,
-          MessageBoxImage.Question);
-
-        if (result == MessageBoxResult.No)
-        {
-          return; // user not added
-        }
+        // DO NOT show UI here; caller/GUI should handle messaging
+        return false; // Reject the addition
       }
       
       UserNode newNode = new UserNode(user);
@@ -55,6 +35,7 @@ namespace D201_Assignment_01
         tail = newNode;
       }
       Count++;
+      return true;
     }
 
     public bool HasDuplicateUserID(string userID)
