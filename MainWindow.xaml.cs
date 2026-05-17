@@ -80,7 +80,20 @@ namespace D201_Assignment_01
       };
       if (openFileDialog.ShowDialog() == true)
       {
-        MovieFileManager.LoadMoviesFromJsonFile(movieLibrary, openFileDialog.FileName);
+        // check for duplicates before accepting import
+        bool success = MovieFileManager.LoadMoviesFromJsonFile(movieLibrary, openFileDialog.FileName, checkForDuplicates: true);
+        
+        if (!success)
+        {
+          MessageBox.Show(
+            "One or more movies in the imported file have duplicate MovieIDs.\n\n" +
+            "Please ensure all MovieIDs are unique before importing.",
+            "Duplicate MovieIDs",
+            MessageBoxButton.OK,
+            MessageBoxImage.Error);
+          return;
+        }
+
         MovieFileManager.SaveMoviesToJsonFile(movieLibrary, movieJsonFilePath); // save after import
         RefreshListView();
       }

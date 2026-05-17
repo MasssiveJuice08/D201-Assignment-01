@@ -256,7 +256,8 @@ namespace D201_Assignment_01
       }
     }
 
-    private bool HasDuplicateMovieID(string movieID)
+    // check if a single movie has a duplicate movieID
+    public bool HasDuplicateMovieID(string movieID)
     {
       MovieNode current = head;
       while (current != null)
@@ -268,6 +269,37 @@ namespace D201_Assignment_01
         current = current.Next;
       }
       return false;
+    }
+
+    // overload for checking a list of movies for duplicate movieIDs
+    public bool HasDuplicateMovieID(List<Movie> movies)
+    {
+      foreach (Movie movie in movies)
+      {
+        if (HasDuplicateMovieID(movie.MovieID)) // Reuse original method
+        {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    // Bulk add method for loading from JSON (skips duplicate checks)
+    public void BulkAdd(Movie movie)
+    {
+      MovieNode newNode = new MovieNode(movie);
+      if (head == null)
+      {
+        head = newNode;
+        tail = newNode;
+      }
+      else
+      {
+        tail.Next = newNode;
+        tail = newNode;
+      }
+      Count++;
+      movieIDToNode[movie.MovieID] = newNode; // Add to hashtable
     }
   }
 }
