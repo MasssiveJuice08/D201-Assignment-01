@@ -64,11 +64,29 @@ namespace D201_Assignment_01
 
     private void RemoveMovieButton_Click(object sender, RoutedEventArgs e)
     {
+      if (listViewMovies.SelectedItem == null)
+      {
+        MessageBox.Show("No movie is selected.", "No Movie Selected", MessageBoxButton.OK, MessageBoxImage.Information);
+        return;
+      }
+
       if (listViewMovies.SelectedItem is Movie selectedMovie)
       {
-        movieLibrary.Remove(selectedMovie.MovieID);
-        MovieFileManager.SaveMoviesToJsonFile(movieLibrary, movieJsonFilePath); // save to JSON
-        RefreshListView();
+        // confirm deletion with warning about associated data loss
+        MessageBoxResult result = MessageBox.Show(
+          $"Are you sure you want to remove '{selectedMovie.Title}'?\n\n" +
+          "This will also remove borrower history associated with the movie.\n\n" +
+          "This action cannot be undone.",
+          "Confirm Removal",
+          MessageBoxButton.YesNo,
+          MessageBoxImage.Warning);
+
+        if (result == MessageBoxResult.Yes)
+        {
+          movieLibrary.Remove(selectedMovie.MovieID);
+          MovieFileManager.SaveMoviesToJsonFile(movieLibrary, movieJsonFilePath); // save to JSON
+          RefreshListView();
+        }
       }
     }
 
